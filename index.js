@@ -28,24 +28,23 @@ function calculate(payload, octokit, milestones) {
 }
 
 async function validateOpenIssue(payload, octokit) {
-  let repoName = payload.pull_request.repository.name
-  let prNo = payload.number
+  // let repoName = payload.pull_request.repository.name
+  let prNo = payload.pull_request.number
+  let milestoneStatus;
+  try {
+    const { data: pullRequest } = await octokit.pulls.get({
+      owner: 'dipjyotimetia',
+      repo: 'actions',
+      pull_number: prNo
+    })
 
-  const { data: pullRequest } = await octokit.pulls.get({
-    owner: 'dipjyotimetia',
-    repo: repoName,
-    pull_number: prNo
-  })
-
-  const { data: miles } = await octokit.issues.get({
-    owner: 'dipjyotimetia',
-    repo: repoName,
-    milestone_number: pullRequest.milestone.number,
-  })
-
-  const milestoneStatus = miles.state;
-  if (milestoneStatus != 'open') {
-    throw new Error('Payload milestone is closed')
+    milestoneStatus = pullRequest.milestone.state;
+    if (milestoneStatus != 'open') {
+      throw new Error('Payload milestone is closed')
+    }
+  } catch (error) {
+    core.setFailed("Milestone is closed")
   }
+
   return milestoneStatus != null
 }
