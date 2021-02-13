@@ -44,13 +44,8 @@ async function validateOpenIssue(payload, octokit) {
     pull_number: prNo
   })
   console.log(`Miles NO is ${pullRequest.milestone.number}`)
-  const { data: miles } = await octokit.issues.get({
-    owner: 'dipjyotimetia',
-    repo: 'actions',
-    milestone_number: pullRequest.milestone.number,
-  })
 
-  const milestoneStatus = miles.state;
+  const milestoneStatus = pullRequest.milestone.state;
   if (milestoneStatus != 'open') {
     throw new Error('Payload milestone is closed')
   }
