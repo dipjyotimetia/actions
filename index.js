@@ -18,7 +18,7 @@ async function run() {
 run();
 
 function calculate(payload, octokit, milestones) {
-  const hasValidMiles = validateOpenIssue(payload, octokit)
+  const hasValidMiles = validateOpenMilestone(payload, octokit)
 
   if (milestones === 'true') {
     if (hasValidMiles === false) {
@@ -27,14 +27,14 @@ function calculate(payload, octokit, milestones) {
   }
 }
 
-async function validateOpenIssue(payload, octokit) {
-  // let repoName = payload.pull_request.repository.name
+async function validateOpenMilestone(payload, octokit) {
+  let repoName = payload.repository.name
   let prNo = payload.pull_request.number
   let milestoneStatus;
   try {
     const { data: pullRequest } = await octokit.pulls.get({
       owner: 'dipjyotimetia',
-      repo: 'actions',
+      repo: repoName,
       pull_number: prNo
     })
 
