@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 const milestones = core.getInput('milestone')
-const mytoken = core.getInput('token')
+const mytoken = core.getInput('github-token')
 const octokit = github.getOctokit(mytoken)
 
 

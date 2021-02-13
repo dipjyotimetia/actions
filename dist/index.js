@@ -9,7 +9,7 @@ const core = __nccwpck_require__(186);
 const github = __nccwpck_require__(438);
 
 const milestones = core.getInput('milestone')
-const mytoken = core.getInput('token')
+const mytoken = core.getInput('github-token')
 const octokit = github.getOctokit(mytoken)
 
 
