@@ -35,18 +35,18 @@ function calculate(payload, octokit, milestones) {
 }
 
 async function validateOpenIssue(payload, octokit) {
-  let repoName = payload.pull_request.repository.name
+  // let repoName = payload.pull_request.repository.name
   let prNo = payload.number
 
   const { data: pullRequest } = await octokit.pulls.get({
     owner: 'dipjyotimetia',
-    repo: repoName,
+    repo: 'actions',
     pull_number: prNo
   })
 
   const { data: miles } = await octokit.issues.get({
     owner: 'dipjyotimetia',
-    repo: repoName,
+    repo: 'actions',
     milestone_number: pullRequest.milestone.number,
   })
 
