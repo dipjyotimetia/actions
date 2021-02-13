@@ -1,10 +1,12 @@
 name: 'PR Milestone'
 description: 'Validate PR milestone'
 inputs:
+  github-token:
+    description: "provide token"
+    required: true
   milestone:
     description: "milestones"
     required: true
-    default: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
